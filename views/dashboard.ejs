@@ -1,0 +1,51 @@
+<%- include('partials/header', { active: 'dashboard' }) %>
+
+<header class="view-header">
+  <h1>Dashboard</h1>
+  <p>City General Hospital &middot; patient file overview</p>
+</header>
+
+<div class="metric-card" style="margin-bottom:20px;">
+    <h3>EC2 Instance Information</h3>
+
+    <p><strong>Instance ID:</strong> <%= instanceInfo.instanceId %></p>
+
+    <p><strong>Hostname:</strong> <%= instanceInfo.hostname %></p>
+
+    <p><strong>Private IP:</strong> <%= instanceInfo.privateIp %></p>
+</div>
+
+<div class="metric-grid">
+  <div class="metric-card">
+    <p class="metric-label">Total files</p>
+    <p class="metric-value"><%= stats.total %></p>
+  </div>
+  <div class="metric-card">
+    <p class="metric-label">Pending validation</p>
+    <p class="metric-value warn"><%= stats.pending %></p>
+  </div>
+  <div class="metric-card">
+    <p class="metric-label">Archived</p>
+    <p class="metric-value"><%= stats.archived %></p>
+  </div>
+  <div class="metric-card">
+    <p class="metric-label">Active doctors</p>
+    <p class="metric-value"><%= stats.doctors %></p>
+  </div>
+</div>
+
+<h2 class="section-label">Recent activity</h2>
+<ul class="activity-list">
+  <% if (recent.length === 0) { %>
+    <li><span>No activity logged yet — upload a file to get started.</span></li>
+  <% } %>
+  <% recent.forEach(function(r) { %>
+    <li>
+      <i class="ti <%= r.event_type === 'REJECTED' ? 'ti-alert-triangle danger' : (r.event_type === 'ARCHIVED' ? 'ti-archive muted' : 'ti-circle-check ok') %>" aria-hidden="true"></i>
+      <span><%= r.file_name || '(file)' %> — <%= r.event_detail || r.event_type %></span>
+      <time><%= new Date(r.event_time).toLocaleString() %></time>
+    </li>
+  <% }) %>
+</ul>
+
+<%- include('partials/footer') %>

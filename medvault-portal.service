@@ -1,0 +1,22 @@
+; MedVault Portal backend - systemd service
+; Deploy path: /etc/systemd/system/medvault-portal.service
+;
+; Keeps the Node app running persistently, restarts it if it crashes, and
+; starts it automatically on boot (needed since every Auto Scaling Group
+; instance boots fresh from the AMI).
+
+[Unit]
+Description=MedVault Portal backend (Node/Express)
+After=network.target
+
+[Service]
+Type=simple
+User=ec2-user
+WorkingDirectory=/opt/medvault-portal-app
+ExecStart=/usr/bin/node /opt/medvault-portal-app/server.js
+Restart=always
+RestartSec=5
+EnvironmentFile=/opt/medvault-portal-app/.env
+
+[Install]
+WantedBy=multi-user.target

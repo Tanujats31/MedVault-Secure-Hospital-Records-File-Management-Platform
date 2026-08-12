@@ -1,0 +1,32 @@
+<%- include('partials/header', { active: 'upload' }) %>
+
+<header class="view-header">
+  <h1>Upload patient file</h1>
+  <p>Files are sent over FTPS to the secure file server for validation.</p>
+</header>
+
+<% if (message) { %>
+  <p class="form-status success"><%= message %></p>
+<% } %>
+<% if (error) { %>
+  <p class="form-status error"><%= error %></p>
+<% } %>
+
+<form method="POST" action="/upload" enctype="multipart/form-data" class="upload-form">
+  <label>
+    <span>Patient reference</span>
+    <input type="text" name="patient_ref" placeholder="PT-2026-0001" required>
+  </label>
+  <label>
+    <span>File</span>
+    <input type="file" name="file" required>
+  </label>
+  <label>
+    <span>Notes (optional)</span>
+    <textarea name="notes" rows="3" placeholder="Follow-up scan for cardiology review"></textarea>
+  </label>
+  <button type="submit" class="btn-primary"><i class="ti ti-upload" aria-hidden="true"></i>Upload file</button>
+  <p class="hint">Accepted types: pdf, jpg, jpeg, png, docx &middot; max 25 MB</p>
+</form>
+
+<%- include('partials/footer') %>

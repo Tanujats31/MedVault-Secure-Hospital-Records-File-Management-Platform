@@ -1,0 +1,32 @@
+<%- include('partials/header', { active: 'archive' }) %>
+
+<header class="view-header">
+  <h1>Archive status</h1>
+  <p>Files older than 30 days, moved to LUKS-encrypted long-term storage.</p>
+</header>
+
+<div class="metric-grid">
+  <div class="metric-card">
+    <p class="metric-label">Archived files</p>
+    <p class="metric-value"><%= count %></p>
+  </div>
+  <div class="metric-card">
+    <p class="metric-label">Encryption</p>
+    <p class="metric-value small"><i class="ti ti-lock ok" aria-hidden="true"></i> LUKS active</p>
+  </div>
+</div>
+
+<ul class="activity-list">
+  <% if (files.length === 0) { %>
+    <li><span>No files archived yet.</span></li>
+  <% } %>
+  <% files.forEach(function(f) { %>
+    <li>
+      <i class="ti ti-file-check muted" aria-hidden="true"></i>
+      <span><%= f.file_name %> (<%= f.patient_ref %>)</span>
+      <time><%= f.archived_at ? new Date(f.archived_at).toLocaleString() : '' %></time>
+    </li>
+  <% }) %>
+</ul>
+
+<%- include('partials/footer') %>

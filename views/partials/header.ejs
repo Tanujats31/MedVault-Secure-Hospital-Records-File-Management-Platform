@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MedVault Portal</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tabler-icons/2.44.0/iconfont/tabler-icons.min.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+<div class="app">
+  <aside class="sidebar">
+    <div class="brand">
+      <span class="brand-mark">MV</span>
+      <span class="brand-name">MedVault</span>
+    </div>
+    <nav class="nav">
+      <a class="nav-item <%= typeof active !== 'undefined' && active === 'dashboard' ? 'active' : '' %>" href="/dashboard">
+        <i class="ti ti-layout-dashboard" aria-hidden="true"></i><span>Dashboard</span>
+      </a>
+      <% if (user && (user.role === 'doctor' || user.role === 'itadmin')) { %>
+      <a class="nav-item <%= typeof active !== 'undefined' && active === 'upload' ? 'active' : '' %>" href="/upload">
+        <i class="ti ti-upload" aria-hidden="true"></i><span>Upload file</span>
+      </a>
+      <% } %>
+      <a class="nav-item <%= typeof active !== 'undefined' && active === 'records' ? 'active' : '' %>" href="/records">
+        <i class="ti ti-file-text" aria-hidden="true"></i><span>Patient records</span>
+      </a>
+      <a class="nav-item <%= typeof active !== 'undefined' && active === 'archive' ? 'active' : '' %>" href="/archive">
+        <i class="ti ti-lock" aria-hidden="true"></i><span>Archive status</span>
+      </a>
+      <% if (user && user.role === 'itadmin') { %>
+      <a class="nav-item <%= typeof active !== 'undefined' && active === 'admin' ? 'active' : '' %>" href="/admin">
+        <i class="ti ti-users" aria-hidden="true"></i><span>Admin</span>
+      </a>
+      <% } %>
+    </nav>
+    <div class="user-card">
+      <div class="avatar"><%= user ? user.full_name.split(' ').map(n => n[0]).join('').slice(0,2).toUpperCase() : '' %></div>
+      <div>
+        <p class="user-name"><%= user ? user.full_name : '' %></p>
+        <p class="user-role"><%= user ? user.role.charAt(0).toUpperCase() + user.role.slice(1) : '' %></p>
+      </div>
+      <a href="/logout" title="Log out" style="margin-left:auto;color:var(--muted);"><i class="ti ti-logout" aria-hidden="true"></i></a>
+    </div>
+  </aside>
+  <main class="content">

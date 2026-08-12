@@ -1,0 +1,56 @@
+<%- include('partials/header', { active: 'admin' }) %>
+
+<header class="view-header">
+  <h1>Admin — portal users</h1>
+  <p>Login accounts for the web portal (separate from the Linux/FTP accounts on the File Server).</p>
+</header>
+
+<% if (message) { %><p class="form-status success"><%= message %></p><% } %>
+<% if (error) { %><p class="form-status error"><%= error %></p><% } %>
+
+<div class="table-wrap" style="margin-bottom:2rem;">
+  <table>
+    <thead>
+      <tr>
+        <th>Username</th>
+        <th>Full name</th>
+        <th>Role</th>
+        <th>Status</th>
+        <th class="right">Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% users.forEach(function(u) { %>
+        <tr>
+          <td><%= u.username %></td>
+          <td><%= u.full_name %></td>
+          <td><%= u.role %></td>
+          <td><span class="badge <%= u.active ? 'active' : 'archived' %>"><%= u.active ? 'active' : 'disabled' %></span></td>
+          <td style="text-align:right;">
+            <form method="POST" action="/admin/users/<%= u.id %>/toggle" style="display:inline;">
+              <button type="submit" class="icon-btn" title="Toggle active"><i class="ti ti-power" aria-hidden="true"></i></button>
+            </form>
+          </td>
+        </tr>
+      <% }) %>
+    </tbody>
+  </table>
+</div>
+
+<h2 class="section-label">Add a new portal user</h2>
+<form method="POST" action="/admin/users" class="upload-form">
+  <label><span>Username</span><input type="text" name="username" required></label>
+  <label><span>Full name</span><input type="text" name="full_name" required></label>
+  <label>
+    <span>Role</span>
+    <select name="role" required style="padding:9px 11px;border:1px solid var(--border);border-radius:var(--radius);">
+      <option value="doctor">Doctor</option>
+      <option value="nurse">Nurse</option>
+      <option value="itadmin">IT admin</option>
+    </select>
+  </label>
+  <label><span>Temporary password</span><input type="password" name="password" required></label>
+  <button type="submit" class="btn-primary"><i class="ti ti-user-plus" aria-hidden="true"></i>Create user</button>
+</form>
+
+<%- include('partials/footer') %>
