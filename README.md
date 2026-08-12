@@ -34,85 +34,147 @@
 
 ## Introduction
 
-MedVault is a secure cloud-based Hospital Records File Management Platform developed using AWS and Linux technologies. The project allows doctors to securely upload patient records, nurses to access authorized records, and IT administrators to manage the complete infrastructure. The application follows a secure multi-tier architecture using AWS services and Linux administration concepts to provide high availability, scalability, automation, and data security. Patient records are securely uploaded through FTPS, stored in Amazon S3, metadata is maintained in Amazon RDS, notifications are sent using Amazon SNS, and records are securely delivered through Amazon CloudFront using Signed URLs.
+MedVault is a secure cloud-based Hospital Records File Management Platform developed using AWS Cloud and Linux Administration technologies.
+
+The platform allows doctors to securely upload patient records, nurses to access authorized records, and IT administrators to manage the complete infrastructure.
+
+The application follows a secure multi-tier AWS architecture designed to provide security, scalability, high availability, automation, and disaster recovery.
+
+Patient records are securely uploaded using FTPS, validated using Linux Bash scripts, stored in Amazon S3, and their metadata is maintained in Amazon RDS MySQL. AWS Lambda and Amazon SNS provide automated processing and notifications, while Amazon CloudFront provides secure access to records using Signed URLs.
 
 ---
 
 # Technologies Used
 
+## AWS Services
+
 - Amazon EC2
 - Amazon VPC
 - Internet Gateway
 - NAT Gateway
+- Bastion Host
 - Application Load Balancer (ALB)
 - Auto Scaling Group (ASG)
 - Target Group
 - Amazon S3
 - Amazon CloudFront
-- API Gateway
+- Amazon API Gateway
 - AWS Lambda
 - Amazon RDS MySQL
 - Amazon SNS
 - IAM
 - Security Groups
+- Amazon CloudWatch
+
+## Linux & DevOps Technologies
+
+- Amazon Linux 2023
+- Nginx
+- Node.js
+- Express.js
 - VSFTPD (FTPS)
+- Bash Shell Scripting
+- Cron Jobs
 - Linux Users & Groups
 - Linux ACL
 - LVM
 - LUKS Encryption
-- Bash Shell Scripting
-- Cron Jobs
-- Nginx
-- Node.js
-- Express.js
 - MySQL
 
 ---
 
 # AWS Architecture
 
-## AWS Architecture
+## Complete Architecture
 
-![AWS Architecture](image/arc.jpg)
-```
+<p align="center">
+  <img src="image/arc.jpg" alt="MedVault AWS Architecture" width="1000">
+</p>
+
+The MedVault architecture uses a multi-tier AWS design with public and private subnets.
+
+The architecture includes:
+
+- Amazon VPC
+- Public and Private Subnets
+- Application Load Balancer
+- Auto Scaling Group
+- EC2 Instances
+- Bastion Host
+- NAT Gateway
+- Amazon RDS MySQL
+- Amazon S3
+- Amazon EFS
+- API Gateway
+- AWS Lambda
+- Amazon SNS
+- Amazon CloudFront
+- IAM
+- Security Groups
+
+The architecture separates public-facing components from application and database resources to improve security and maintainability.
 
 ---
 
 # Project Workflow
 
-1. Doctor accesses the MedVault application through the Application Load Balancer.
+The complete MedVault workflow is:
 
-2. Login credentials are validated by the Node.js Portal Application.
+1. The doctor accesses the MedVault application.
 
-3. Doctor uploads patient records securely using FTPS.
+2. The request reaches the Application Load Balancer.
 
-4. Validation scripts verify the uploaded files.
+3. The Application Load Balancer distributes traffic to the application servers.
 
-5. Valid records are stored in Amazon S3.
+4. The doctor logs in using authorized credentials.
 
-6. Lambda automatically processes the uploaded file.
+5. The doctor uploads patient records securely using FTPS.
 
-7. SNS sends an email notification.
+6. Validation scripts verify the uploaded files.
 
-8. Patient metadata is stored in Amazon RDS.
+7. Validated records are processed by the application.
 
-9. CloudFront generates Signed URLs for secure download.
+8. Patient files are stored securely in Amazon S3.
 
-10. Archive Server securely stores old records and backs them up to Amazon S3.
+9. AWS Lambda processes the uploaded record.
+
+10. Patient metadata and file information are stored in Amazon RDS MySQL.
+
+11. Amazon SNS sends email notifications to authorized users.
+
+12. CloudFront provides secure access to patient records using Signed URLs.
+
+13. Old records are archived using Bash scripts and Cron Jobs.
+
+14. Archive data is protected using LUKS encrypted storage.
+
+15. Archive backups are synchronized with Amazon S3 for disaster recovery.
 
 ---
 
 # Project Structure
 
-```
+```text
 MedVault/
 │
 ├── image/
+│   ├── CDN.jpg
+│   ├── RDSDATA.jpg
+│   ├── S3SYNC.jpg
+│   ├── arc.jpg
+│   ├── dashboard.jpg
+│   ├── fileuploads.jpg
+│   ├── login.jpg
+│   ├── snsmail.jpg
+│   └── upload.jpg
+│
 ├── public/
 ├── scripts/
 ├── sql/
 ├── src/
 ├── views/
+├── tmp-uploads/
+│
 ├── server.js
 ├── package.json
 ├── package-lock.json
@@ -124,103 +186,298 @@ MedVault/
 
 # Login Page
 
-Doctors, Nurses, and IT Administrators securely log in using their authorized credentials.
+Doctors, Nurses, and IT Administrators can securely log in to the MedVault platform using their authorized credentials.
 
-![Login Page](image/login.jpg)
+<p align="center">
+  <img src="image/login.jpg" alt="MedVault Login Page" width="900">
+</p>
 
 ---
 
 # Upload Patient Records
 
-Doctors securely upload patient records using FTPS. Validation scripts verify every uploaded file before processing.
+Doctors can upload patient records through the MedVault application.
 
-![Upload](image/upload.jpg)
+Uploaded records are securely transferred using FTPS and validated before further processing.
+
+<p align="center">
+  <img src="image/upload.jpg" alt="Patient Record Upload" width="900">
+</p>
 
 ---
 
 # Doctor Dashboard
 
-Doctors can upload patient records, view uploaded records, and securely download files using CloudFront Signed URLs.
+The Doctor Dashboard allows doctors to upload patient records, manage uploaded files, and access authorized patient records.
 
-![Dashboard](image/dashboard.jpg)
+Secure download links are provided through CloudFront Signed URLs.
 
----
-
-# Secure File Upload (FTPS)
-
-Patient records are transferred securely using FTP over TLS (FTPS). File validation scripts check file extensions and integrity before storing them.
-
-![File Upload](image/file%20uploads.jpg)
+<p align="center">
+  <img src="image/dashboard.jpg" alt="Doctor Dashboard" width="900">
+</p>
 
 ---
 
-# Amazon RDS
+# Secure File Upload – FTPS
 
-Amazon RDS MySQL stores patient metadata, user details, upload information, and file references securely.
+MedVault uses VSFTPD with FTP over TLS (FTPS) for secure file transfer.
 
-![RDS](image/RDSDATA.jpg)
+FTPS protects patient records during transmission by encrypting the communication channel.
+
+Validation scripts check uploaded files before they are stored in Amazon S3.
+
+<p align="center">
+  <img src="image/fileuploads.jpg" alt="Secure FTPS File Upload" width="900">
+</p>
+
+---
+
+# Amazon RDS MySQL
+
+Amazon RDS for MySQL is used to store application and patient-record metadata.
+
+The database stores information such as:
+
+- User details
+- Patient metadata
+- File information
+- Upload records
+- Record references
+- Application data
+
+<p align="center">
+  <img src="image/RDSDATA.jpg" alt="Amazon RDS MySQL" width="900">
+</p>
 
 ---
 
 # Amazon SNS Notification
 
-Whenever a doctor uploads a new patient record, AWS Lambda automatically triggers Amazon SNS to send email notifications.
+When a doctor uploads a new patient record, the application workflow triggers AWS Lambda.
 
-![SNS](image/snsmail.jpg)
+Lambda processes the event and Amazon SNS sends an email notification to the configured recipients.
+
+<p align="center">
+  <img src="image/snsmail.jpg" alt="Amazon SNS Notification" width="900">
+</p>
 
 ---
 
 # Amazon CloudFront
 
-CloudFront securely delivers patient records using Signed URLs, preventing direct public access to Amazon S3 while improving download performance.
+Amazon CloudFront is used to securely deliver patient records.
 
-![CloudFront](image/CDN.jpg)
+CloudFront Signed URLs provide controlled access to protected files without exposing the S3 objects directly to unauthorized users.
+
+CloudFront also improves download performance by delivering content through AWS edge locations.
+
+<p align="center">
+  <img src="image/CDN.jpg" alt="Amazon CloudFront" width="900">
+</p>
 
 ---
 
 # Amazon S3 Synchronization
 
-Validated patient records are securely stored in Amazon S3. Archive backups are also synchronized to S3 for disaster recovery.
+Amazon S3 is used as secure object storage for validated patient records.
 
-![S3 Sync](image/S3SYNC.jpg)
+Archive backups are also synchronized to Amazon S3 to support disaster recovery.
+
+<p align="center">
+  <img src="image/S3SYNC.jpg" alt="Amazon S3 Synchronization" width="900">
+</p>
 
 ---
 
 # Archive Management
 
-Old patient records are automatically archived using Cron Jobs and Bash scripts. Archive storage is protected using LUKS encrypted storage and backed up to Amazon S3.
+Old patient records are automatically archived using Linux Bash scripts and Cron Jobs.
 
-![Archive](image/arc.jpg)
+Archive storage is protected using LUKS encryption.
+
+The archived data can also be synchronized to Amazon S3 for backup and disaster recovery.
 
 ---
 
 # Security Features
 
-- Multi-tier AWS Architecture
-- Public and Private Subnets
+MedVault implements multiple layers of security.
+
+### AWS Security
+
+- Multi-tier VPC architecture
+- Public and private subnets
 - Bastion Host
-- FTPS Secure File Transfer
-- IAM Roles
+- NAT Gateway
 - Security Groups
-- Linux ACL Permissions
-- LUKS Disk Encryption
+- IAM Roles
+- Private RDS deployment
+- S3 access control
 - CloudFront Signed URLs
 - API Gateway
+- AWS Lambda
+- Encryption
+
+### Linux Security
+
+- Linux Users and Groups
+- File Permissions
+- Linux ACL
+- LUKS Disk Encryption
+- Secure FTPS
+- Restricted SSH Access
+- Nginx Configuration
+- Systemd Services
+
+---
+
+# High Availability and Scalability
+
+MedVault uses AWS services to improve application availability and scalability.
+
+### Application Load Balancer
+
+The ALB distributes incoming traffic across healthy application servers.
+
+### Auto Scaling Group
+
+The Auto Scaling Group can automatically launch or terminate EC2 instances based on configured scaling policies.
+
+### Multi-AZ Architecture
+
+Resources can be distributed across multiple Availability Zones to reduce dependency on a single Availability Zone.
+
+### Amazon S3
+
+S3 provides highly durable object storage for patient records and backups.
+
+---
+
+# Disaster Recovery
+
+MedVault includes multiple mechanisms for protecting important records.
+
+- Patient records stored in Amazon S3
+- Archive backups synchronized to Amazon S3
+- LUKS encrypted archive storage
+- Amazon RDS automated backups
+- Multi-AZ database deployment where required
+- Secure backup storage
+- Automated Bash and Cron Jobs
+
+These mechanisms help protect patient records from accidental deletion, server failure, or storage failure.
+
+---
+
+# AWS Services Used
+
+| AWS Service | Purpose |
+|---|---|
+| Amazon EC2 | Hosts application and supporting servers |
+| Amazon VPC | Provides isolated network infrastructure |
+| Internet Gateway | Provides internet connectivity for public resources |
+| NAT Gateway | Provides outbound internet access for private resources |
+| Application Load Balancer | Distributes application traffic |
+| Auto Scaling Group | Provides scalability and high availability |
+| Target Group | Registers and monitors application instances |
+| Amazon S3 | Stores patient records and backups |
+| Amazon CloudFront | Securely delivers patient records |
+| API Gateway | Provides API management |
+| AWS Lambda | Provides event-driven automation |
+| Amazon RDS MySQL | Stores application and patient metadata |
+| Amazon SNS | Sends email notifications |
+| IAM | Controls AWS resource access |
+| Security Groups | Controls network traffic |
+| CloudWatch | Provides monitoring and logging |
+
+---
+
+# Linux Administration Features
+
+The project demonstrates several Linux administration concepts.
+
+- Linux User Management
+- Linux Group Management
+- File Permissions
+- Linux ACL
+- SSH Configuration
+- Nginx
+- VSFTPD
+- FTPS
+- LVM
+- LUKS Encryption
+- Bash Scripting
+- Cron Jobs
+- Systemd Services
+- Disk Management
+- Storage Management
+- Service Management
+
+---
+
+# Key Features
+
+- Secure Doctor Login
+- Role-Based Access
+- Secure Patient Record Upload
+- FTPS File Transfer
+- File Validation
+- Amazon S3 Storage
+- Amazon RDS MySQL Metadata Storage
 - AWS Lambda Automation
 - Amazon SNS Notifications
-- Auto Scaling
+- CloudFront Secure Delivery
+- Signed URLs
+- Archive Management
+- LUKS Encryption
+- S3 Backup
+- Disaster Recovery
 - Application Load Balancer
+- Auto Scaling
+- Private Networking
+- Linux Administration
+
+---
+
+# Project Benefits
+
+MedVault demonstrates how AWS Cloud and Linux Administration technologies can be combined to build a secure hospital records management platform.
+
+The architecture provides:
+
+- Secure data transfer
+- Secure storage
+- Controlled access
+- Automated processing
+- Automated notifications
+- Scalable application infrastructure
+- High availability
+- Disaster recovery
+- Linux-based automation
+- Encrypted archive storage
 
 ---
 
 # Conclusion
 
-The MedVault project successfully demonstrates the implementation of a secure, scalable, and highly available Hospital Records File Management Platform using AWS and Linux technologies. Doctors securely upload patient records through FTPS, nurses access authorized records, and IT administrators manage the complete infrastructure. AWS services such as Amazon EC2, VPC, S3, CloudFront, Lambda, API Gateway, Amazon RDS, SNS, Auto Scaling Group, and Application Load Balancer work together to provide secure storage, automated processing, high availability, and efficient content delivery. Linux features including ACLs, LVM, LUKS Encryption, Bash Scripting, and Cron Jobs further enhance system security and automation. The project follows AWS best practices by implementing private networking, secure access through a Bastion Host, encrypted storage, and disaster recovery through Amazon S3 backups.
+The MedVault project demonstrates the implementation of a secure, scalable, and highly available Hospital Records File Management Platform using AWS Cloud and Linux technologies.
+
+Doctors can securely upload patient records using FTPS. Uploaded files are validated before being stored in Amazon S3. Patient metadata is maintained in Amazon RDS MySQL, while AWS Lambda provides automated processing and Amazon SNS provides notification services.
+
+Amazon CloudFront provides secure delivery of patient records using Signed URLs, while Linux technologies such as ACL, LVM, LUKS Encryption, Bash Scripting, Cron Jobs, Nginx, and VSFTPD improve system security and automation.
+
+AWS services including Amazon EC2, VPC, Application Load Balancer, Auto Scaling Group, S3, CloudFront, API Gateway, Lambda, RDS, SNS, and IAM work together to provide a secure and reliable cloud architecture.
+
+The project demonstrates practical knowledge of AWS Cloud, Linux Administration, networking, security, storage, automation, and disaster recovery.
 
 ---
 
 # Developed By
 
-## Ankith N
+## Tanuja T S
 
 **AWS Cloud | Linux Administrator | DevOps Enthusiast**
+
+---
+
+⭐ **If you found this project useful, don't forget to Star the repository.**
