@@ -1,4 +1,36 @@
 # MedVault – Secure Hospital Records File Management Platform
+![AWS](https://img.shields.io/badge/AWS-Cloud-orange?logo=amazonaws)
+![Amazon Linux](https://img.shields.io/badge/Linux-Amazon%20Linux%202023-yellow?logo=linux)
+![FastAPI](https://img.shields.io/badge/FastAPI-009688?logo=fastapi)
+![Nginx](https://img.shields.io/badge/Nginx-009639?logo=nginx)
+![Python](https://img.shields.io/badge/Python-3.12-blue?logo=python)
+![HTML5](https://img.shields.io/badge/HTML5-E34F26?logo=html5&logoColor=white)
+![CSS3](https://img.shields.io/badge/CSS3-1572B6?logo=css3&logoColor=white)
+![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?logo=javascript&logoColor=black)
+
+![Amazon EC2](https://img.shields.io/badge/Amazon-EC2-FF9900?logo=amazonaws)
+![Application Load Balancer](https://img.shields.io/badge/Application-Load%20Balancer-orange)
+![Auto Scaling](https://img.shields.io/badge/Auto-Scaling-orange)
+![Amazon VPC](https://img.shields.io/badge/Amazon-VPC-blue)
+![Internet Gateway](https://img.shields.io/badge/Internet-Gateway-lightgrey)
+![NAT Gateway](https://img.shields.io/badge/NAT-Gateway-blue)
+
+![Amazon S3](https://img.shields.io/badge/Amazon-S3-orange)
+![CloudFront](https://img.shields.io/badge/CloudFront-AWS-orange)
+![AWS Lambda](https://img.shields.io/badge/AWS-Lambda-FF9900?logo=awslambda)
+![API Gateway](https://img.shields.io/badge/API-Gateway-FF4F8B)
+![Amazon RDS](https://img.shields.io/badge/Amazon-RDS-527FFF)
+![Amazon SNS](https://img.shields.io/badge/Amazon-SNS-FF9900)
+
+![IAM](https://img.shields.io/badge/AWS-IAM-orange)
+![VSFTPD](https://img.shields.io/badge/FTP-VSFTPD-blue)
+![TLS](https://img.shields.io/badge/TLS-Secured-green)
+![NFS](https://img.shields.io/badge/Linux-NFS-success)
+![LVM](https://img.shields.io/badge/Linux-LVM-blue)
+![LUKS](https://img.shields.io/badge/Linux-LUKS-red)
+![Cron](https://img.shields.io/badge/Linux-Cron-green)
+![Bash](https://img.shields.io/badge/Bash-Scripting-black?logo=gnubash)
+![ACL](https://img.shields.io/badge/Linux-ACL-success)
 
 ## Introduction
 
@@ -39,12 +71,9 @@ MedVault is a secure cloud-based Hospital Records File Management Platform devel
 
 # AWS Architecture
 
-> Add your Architecture Diagram here.
+## AWS Architecture
 
-Example:
-
-```md
-![Architecture](image/arc.jpg)
+![AWS Architecture](image/arc.jpg)
 ```
 
 ---
