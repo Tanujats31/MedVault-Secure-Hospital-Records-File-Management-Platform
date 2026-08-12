@@ -44,7 +44,7 @@ MedVault is a secure cloud-based Hospital Records File Management Platform devel
 Example:
 
 ```md
-![Architecture](image/Architecture.png)
+![Architecture](image/arc.jpg)
 ```
 
 ---
